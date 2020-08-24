@@ -1,10 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 
-const CategoriesScreen = () => {
+const CategoriesScreen = ({ navigation }) => {
+  console.log(navigation);
   return (
     <View style={styles.screen}>
       <Text>CategoriesScreen</Text>
+      <Button
+        title="Go to categories meals"
+        onPress={() => navigation.navigate("CategoriesMeals")}
+      />
     </View>
   );
 };
@@ -12,7 +17,8 @@ const CategoriesScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justi,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -1,10 +1,16 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 
-const DetailsScreen = () => {
+const DetailsScreen = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <Text>DetailsScreen</Text>
+      <Button
+        title="Go to details again"
+        onPress={() => navigation.push("Details")}
+      />
+      <Button title="Go Back" onPress={() => navigation.goBack()} />
+      <Button title="Go to Home" onPress={() => navigation.popToTop()} />
     </View>
   );
 };
@@ -12,7 +18,8 @@ const DetailsScreen = () => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justi,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
