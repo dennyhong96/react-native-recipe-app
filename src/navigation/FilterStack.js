@@ -34,6 +34,18 @@ export default () => (
             />
           </HeaderButtons>
         ),
+        headerRight: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Save"
+              iconName="ios-save"
+              onPress={() => {
+                // "save" is stored into param in FilterScreen
+                route.params.save();
+              }}
+            />
+          </HeaderButtons>
+        ),
       })}
     />
   </FilterStack.Navigator>
