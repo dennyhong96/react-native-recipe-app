@@ -1,20 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+
+import MealList from "../components/MealList";
+import { MEALS } from "../data/dummy";
+
+const favMeals = MEALS.filter((meal) => ["m1", "m2", "m3"].includes(meal.id));
 
 const FavoriteScreen = () => {
-  return (
-    <View style={styles.screen}>
-      <Text>FavoriteScreen</Text>
-    </View>
-  );
+  return <MealList meals={favMeals} />;
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-});
 
 export default FavoriteScreen;
