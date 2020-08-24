@@ -12,12 +12,13 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import DetailsScreen from "../screens/DetailsScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
 
-const Stack = createStackNavigator();
+const MealStack = createStackNavigator();
+const FavStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const MTab = createMaterialBottomTabNavigator();
 
-const MealsStack = () => (
-  <Stack.Navigator
+const MealNavigator = () => (
+  <MealStack.Navigator
     mode="modal" // Modal like transition
     initialRouteName="Categories"
     screenOptions={{
@@ -27,14 +28,32 @@ const MealsStack = () => (
       headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "#fff", // Title text color
     }}
   >
-    <Stack.Screen
+    <MealStack.Screen
       name="Categories"
       component={CategoriesScreen}
       options={{ headerTitle: "Meal Categories" }}
     />
-    <Stack.Screen name="CategoriesMeals" component={CategoriesMealsScreen} />
-    <Stack.Screen name="Details" component={DetailsScreen} />
-  </Stack.Navigator>
+    <MealStack.Screen
+      name="CategoriesMeals"
+      component={CategoriesMealsScreen}
+    />
+    <MealStack.Screen name="Details" component={DetailsScreen} />
+  </MealStack.Navigator>
+);
+
+const FavNavigator = () => (
+  <FavStack.Navigator
+    initialRouteName="Favorite"
+    screenOptions={{
+      headerStyle: {
+        backgroundColor: Platform.OS === "ios" ? "#fff" : Colors.primaryColor,
+      },
+      headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "#fff", // Title text color
+    }}
+  >
+    <FavStack.Screen name="Favorite" component={FavoriteScreen} />
+    <FavStack.Screen name="Details" component={DetailsScreen} />
+  </FavStack.Navigator>
 );
 
 const MainTab =
@@ -47,7 +66,7 @@ const MainTab =
     >
       <Tab.Screen
         name="Meals"
-        component={MealsStack}
+        component={MealNavigator}
         options={{
           tabBarIcon: (tabInfo) => (
             <Ionicons name="ios-restaurant" size={25} color={tabInfo.color} />
@@ -55,12 +74,13 @@ const MainTab =
         }}
       />
       <Tab.Screen
-        name="Favorite"
-        component={FavoriteScreen}
+        name="Fav"
+        component={FavNavigator}
         options={{
           tabBarIcon: (tabInfo) => (
             <Ionicons name="ios-star" size={25} color={tabInfo.color} />
           ),
+          tabBarLabel: "Favorite",
         }}
       />
     </Tab.Navigator>
@@ -72,7 +92,7 @@ const MainTab =
     >
       <MTab.Screen
         name="Meals"
-        component={MealsStack}
+        component={MealNavigator}
         options={{
           tabBarIcon: (tabInfo) => (
             <Ionicons name="ios-restaurant" size={25} color={tabInfo.color} />
@@ -80,12 +100,13 @@ const MainTab =
         }}
       />
       <MTab.Screen
-        name="Favorite"
-        component={FavoriteScreen}
+        name="Fav"
+        component={FavNavigator}
         options={{
           tabBarIcon: (tabInfo) => (
             <Ionicons name="ios-star" size={25} color={tabInfo.color} />
           ),
+          tabBarLabel: "Favorite",
         }}
       />
     </MTab.Navigator>
