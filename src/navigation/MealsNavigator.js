@@ -4,18 +4,24 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
 
+import HeaderButton from "../components/HeaderButton";
 import Colors from "../constants/Colors";
 import CategoriesMealsScreen from "../screens/CategoriesMealsScreen";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import DetailsScreen from "../screens/DetailsScreen";
 import FavoriteScreen from "../screens/FavoriteScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 
 const MealStack = createStackNavigator();
 const FavStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const MTab = createMaterialBottomTabNavigator();
+const MainDrawerNav = createDrawerNavigator();
+const FilterStack = createStackNavigator();
 
 const MealNavigator = () => (
   <MealStack.Navigator
@@ -31,7 +37,18 @@ const MealNavigator = () => (
     <MealStack.Screen
       name="Categories"
       component={CategoriesScreen}
-      options={{ headerTitle: "Meal Categories" }}
+      options={({ navigation }) => ({
+        headerTitle: "Meal Categories",
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Menu"
+              iconName="ios-menu"
+              onPress={navigation.openDrawer}
+            />
+          </HeaderButtons>
+        ),
+      })}
     />
     <MealStack.Screen
       name="CategoriesMeals"
@@ -51,12 +68,26 @@ const FavNavigator = () => (
       headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "#fff", // Title text color
     }}
   >
-    <FavStack.Screen name="Favorite" component={FavoriteScreen} />
+    <FavStack.Screen
+      name="Favorite"
+      component={FavoriteScreen}
+      options={({ navigation }) => ({
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Menu"
+              iconName="ios-menu"
+              onPress={navigation.openDrawer}
+            />
+          </HeaderButtons>
+        ),
+      })}
+    />
     <FavStack.Screen name="Details" component={DetailsScreen} />
   </FavStack.Navigator>
 );
 
-const MainTab =
+const MainTab = () =>
   Platform.OS === "ios" ? (
     <Tab.Navigator
       initialRouteName="Meals"
@@ -112,8 +143,40 @@ const MainTab =
     </MTab.Navigator>
   );
 
+const FilterNavigator = () => (
+  <FilterStack.Navigator>
+    <FilterStack.Screen
+      name="Filter"
+      component={FiltersScreen}
+      options={({ navigation, route }) => ({
+        headerTitle: "Filter Meals",
+        headerStyle: {
+          backgroundColor: Platform.OS === "ios" ? "#fff" : Colors.primaryColor,
+        },
+        headerTintColor: Platform.OS === "ios" ? Colors.primaryColor : "#fff", // Title text color
+        headerLeft: () => (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Menu"
+              iconName="ios-menu"
+              onPress={navigation.openDrawer}
+            />
+          </HeaderButtons>
+        ),
+      })}
+    />
+  </FilterStack.Navigator>
+);
+
 const MealsNavigator = () => {
-  return <NavigationContainer>{MainTab}</NavigationContainer>;
+  return (
+    <NavigationContainer>
+      <MainDrawerNav.Navigator>
+        <MainDrawerNav.Screen name="MealsFav" component={MainTab} />
+        <MainDrawerNav.Screen name="Filter" component={FilterNavigator} />
+      </MainDrawerNav.Navigator>
+    </NavigationContainer>
+  );
 };
 
 export default MealsNavigator;
