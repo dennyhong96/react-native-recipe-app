@@ -3,6 +3,7 @@ import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../constants/Colors";
@@ -13,6 +14,7 @@ import FavoriteScreen from "../screens/FavoriteScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const MTab = createMaterialBottomTabNavigator();
 
 const MealsStack = () => (
   <Stack.Navigator
@@ -35,36 +37,62 @@ const MealsStack = () => (
   </Stack.Navigator>
 );
 
-const MealsNavigator = () => {
-  return (
-    <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName="Meals"
-        tabBarOptions={{
-          activeTintColor: Colors.accentColor,
+const MainTab =
+  Platform.OS === "ios" ? (
+    <Tab.Navigator
+      initialRouteName="Meals"
+      tabBarOptions={{
+        activeTintColor: Colors.accentColor,
+      }}
+    >
+      <Tab.Screen
+        name="Meals"
+        component={MealsStack}
+        options={{
+          tabBarIcon: (tabInfo) => (
+            <Ionicons name="ios-restaurant" size={25} color={tabInfo.color} />
+          ),
         }}
-      >
-        <Tab.Screen
-          name="Meals"
-          component={MealsStack}
-          options={{
-            tabBarIcon: (tabInfo) => (
-              <Ionicons name="ios-restaurant" size={25} color={tabInfo.color} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Favorite"
-          component={FavoriteScreen}
-          options={{
-            tabBarIcon: (tabInfo) => (
-              <Ionicons name="ios-star" size={25} color={tabInfo.color} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+      />
+      <Tab.Screen
+        name="Favorite"
+        component={FavoriteScreen}
+        options={{
+          tabBarIcon: (tabInfo) => (
+            <Ionicons name="ios-star" size={25} color={tabInfo.color} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  ) : (
+    <MTab.Navigator
+      shifting={true}
+      initialRouteName="Meals"
+      barStyle={{ backgroundColor: Colors.primaryColor }}
+    >
+      <MTab.Screen
+        name="Meals"
+        component={MealsStack}
+        options={{
+          tabBarIcon: (tabInfo) => (
+            <Ionicons name="ios-restaurant" size={25} color={tabInfo.color} />
+          ),
+        }}
+      />
+      <MTab.Screen
+        name="Favorite"
+        component={FavoriteScreen}
+        options={{
+          tabBarIcon: (tabInfo) => (
+            <Ionicons name="ios-star" size={25} color={tabInfo.color} />
+          ),
+        }}
+      />
+    </MTab.Navigator>
   );
+
+const MealsNavigator = () => {
+  return <NavigationContainer>{MainTab}</NavigationContainer>;
 };
 
 export default MealsNavigator;
