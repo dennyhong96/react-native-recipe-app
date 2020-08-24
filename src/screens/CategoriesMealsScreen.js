@@ -1,7 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 
-const CategoriesMealsScreen = ({ navigation }) => {
+import { CATEGORIES } from "../data/dummy";
+
+const CategoriesMealsScreen = ({ navigation, route }) => {
+  navigation.setOptions({
+    headerTitle: route.params.category.title,
+  });
+
   return (
     <View style={styles.screen}>
       <Text>CategoriesMealsScreen</Text>
