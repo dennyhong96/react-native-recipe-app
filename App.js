@@ -3,7 +3,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { enableScreens } from "react-native-screens";
 
-import MealsNavigator from "./src/navigation/MealsNavigator";
+import MainDrawer from "./src/navigation/MainDrawer";
 
 enableScreens();
 
@@ -26,5 +26,5 @@ export default function App() {
     );
   }
 
-  return <MealsNavigator />;
+  return <MainDrawer />;
 }
