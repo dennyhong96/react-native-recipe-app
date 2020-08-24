@@ -37,7 +37,7 @@ const MealItem = ({ onSelectMeal, item }) => {
               </ImageBackground>
             </View>
             <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-              <DefaultText>{item.duration}</DefaultText>
+              <DefaultText>{item.duration}m</DefaultText>
               <DefaultText>{item.complexity.toUpperCase()}</DefaultText>
               <DefaultText>{item.affordability.toUpperCase()}</DefaultText>
             </View>
