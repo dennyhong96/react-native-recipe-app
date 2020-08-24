@@ -10,28 +10,38 @@ import {
 
 const MealItem = ({ onSelectMeal, item }) => {
   return (
-    <View style={styles.mealItem}>
-      <TouchableOpacity onPress={onSelectMeal}>
-        <View>
-          <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
-            <ImageBackground
-              source={{ uri: item.imageUrl }}
-              style={styles.bgImage}
-            >
-              <View style={styles.titleContainer}>
-                <Text numberOfLines={1} style={styles.title}>
-                  {item.title}
-                </Text>
-              </View>
-            </ImageBackground>
+    <View
+      style={{
+        shadowColor: "#000",
+        shadowOpacity: 0.26,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 10,
+        elevation: 3,
+      }}
+    >
+      <View style={styles.mealItem}>
+        <TouchableOpacity onPress={onSelectMeal}>
+          <View>
+            <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
+              <ImageBackground
+                source={{ uri: item.imageUrl }}
+                style={styles.bgImage}
+              >
+                <View style={styles.titleContainer}>
+                  <Text numberOfLines={1} style={styles.title}>
+                    {item.title}
+                  </Text>
+                </View>
+              </ImageBackground>
+            </View>
+            <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
+              <Text>{item.duration}</Text>
+              <Text>{item.complexity.toUpperCase()}</Text>
+              <Text>{item.affordability.toUpperCase()}</Text>
+            </View>
           </View>
-          <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-            <Text>{item.duration}</Text>
-            <Text>{item.complexity.toUpperCase()}</Text>
-            <Text>{item.affordability.toUpperCase()}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -39,10 +49,11 @@ const MealItem = ({ onSelectMeal, item }) => {
 const styles = StyleSheet.create({
   mealItem: {
     height: 200,
-    width: "90%",
+    width: "100%",
     backgroundColor: "#f5f5f5",
     borderRadius: 10,
     overflow: "hidden",
+    marginVertical: 10,
   },
   mealRow: {
     flexDirection: "row",

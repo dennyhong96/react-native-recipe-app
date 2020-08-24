@@ -1,7 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../components/HeaderButton";
 
-const DetailsScreen = ({ navigation }) => {
+const DetailsScreen = ({ navigation, route }) => {
+  navigation.setOptions({
+    headerTitle: route.params.item.title,
+    headerRight: () => (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item title="Favorite" iconName="ios-star" onPress={() => {}} />
+      </HeaderButtons>
+    ),
+  });
+
   return (
     <View style={styles.screen}>
       <Text>DetailsScreen</Text>

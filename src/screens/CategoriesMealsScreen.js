@@ -22,14 +22,16 @@ const CategoriesMealsScreen = ({ navigation, route }) => {
     />
   );
 
-  console.log(meals);
-
   return (
     <View style={styles.screen}>
       <FlatList
         data={meals}
         renderItem={renderMealItems}
-        contentContainerStyle={{ width: "100%", alignItems: "center" }}
+        contentContainerStyle={{
+          width: "100%",
+          alignItems: "center",
+          paddingHorizontal: 20,
+        }}
       />
     </View>
   );
