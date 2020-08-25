@@ -1,5 +1,5 @@
 import { MEALS } from "../../data/dummy";
-import { TOGGLE_FAVORITE } from "../actions/actionTypes";
+import { TOGGLE_FAVORITE, SET_FILTERS } from "../actions/actionTypes";
 
 const INITIAL_STATE = {
   meals: MEALS,
@@ -12,7 +12,6 @@ export default (state = INITIAL_STATE, action) => {
   switch (type) {
     case TOGGLE_FAVORITE:
       if (state.favoriteMeals.find((meal) => meal.id === payload)) {
-        console.log("already has");
         // Remove fav
         return {
           ...state,
@@ -22,7 +21,6 @@ export default (state = INITIAL_STATE, action) => {
         };
       }
       // Add fav
-      console.log("no has");
       return {
         ...state,
         favoriteMeals: [
@@ -30,6 +28,23 @@ export default (state = INITIAL_STATE, action) => {
           state.meals.find((meal) => meal.id === payload),
         ],
       };
+    case SET_FILTERS:
+      const filteredMeals = state.meals.filter((meal) => {
+        if (payload.isGluttenFree && !meal.isGluttenFree) {
+          return false;
+        }
+        if (payload.isLactoseFree && !meal.isLactoseFree) {
+          return false;
+        }
+        if (payload.isVegan && !meal.isVegal) {
+          return false;
+        }
+        if (payload.isVegetarian && !meal.isVegetarian) {
+          return false;
+        }
+        return true;
+      });
+      return { ...state, filteredMeals };
     default:
       return state;
   }
