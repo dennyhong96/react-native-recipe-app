@@ -1,13 +1,9 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  ScrollView,
-  Image,
-} from "react-native";
+import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useDispatch, useSelector } from "react-redux";
+
+import { toggleFavorite } from "../redux/actions/meals";
 import HeaderButton from "../components/HeaderButton";
 import DefaultText from "../components/DefaultText";
 
@@ -18,11 +14,26 @@ const ListItem = ({ children }) => (
 );
 
 const DetailsScreen = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+  const favoriteMeals = useSelector(
+    ({ meals: { favoriteMeals } }) => favoriteMeals
+  );
+
   navigation.setOptions({
     headerTitle: route.params.item.title,
     headerRight: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
-        <Item title="Favorite" iconName="ios-star" onPress={() => {}} />
+        <Item
+          title="Favorite"
+          iconName={
+            favoriteMeals.find((meal) => meal.id === route.params.item.id)
+              ? `ios-star`
+              : `ios-star-outline`
+          }
+          onPress={() => {
+            dispatch(toggleFavorite(route.params.item.id));
+          }}
+        />
       </HeaderButtons>
     ),
   });
